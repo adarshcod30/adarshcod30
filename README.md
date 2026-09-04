@@ -104,8 +104,9 @@ hand-maintain my own profile.
 
 ## Elsewhere
 
-Computer science at **LNMIIT Jaipur**. Most of what I build ends up deployed
-somewhere free, because a model nobody can open is a claim nobody can check.
+Final-year computer science at **LNMIIT Jaipur**, working mostly in data
+science and applied AI. Most of what I build ends up deployed somewhere free,
+because a model nobody can open is a claim nobody can check.
 
 <div align="center">
 
