@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/banner.png" alt="Adarsh Dwivedi — measured, explainable ML for problems that matter in India. A radial map of 28 projects across five areas: public-interest AI, trust and verification, agentic systems, quant and pipelines, and foundations." width="100%">
+<img src="assets/banner.png" alt="Adarsh Dwivedi — ML, deep learning and generative and agentic AI, built to be checked. A radial map of 28 projects across five areas: public-interest AI, trust and verification, agentic systems, quant and pipelines, and foundations." width="100%">
 
 ### [Orbweaver](https://github.com/adarshcod30/Orbweaver) · [Kadi](https://github.com/adarshcod30/Kadi) · [KrishiMitra](https://github.com/adarshcod30/KrishiMitra) · [Vayu](https://github.com/adarshcod30/Vayu) · [MargaDrishti](https://github.com/adarshcod30/MargaDrishti) · [VaidyaMitra](https://github.com/VaidyaMitra/VaidyaMitra) · [AGENTIQ](https://github.com/B-TechProject/AGENTIQ)
 
@@ -10,9 +10,20 @@
 
 ---
 
-I build machine-learning systems for problems that already have victims — crop
-loss, air quality, road capacity, fraud rings, misdiagnosis, thin-file credit —
-and I build them so a sceptical reader can check every claim I make.
+I build AI systems for problems that already have victims — crop loss, air
+quality, road capacity, fraud rings, misdiagnosis, thin-file credit — and I
+build them so a sceptical reader can check every claim I make.
+
+I work across the whole range rather than one corner of it:
+
+| | What I reach for | Where it shows up |
+|---|---|---|
+| **Classical ML** | XGBoost · LightGBM · CatBoost · scikit-learn · igraph | Orbweaver's account scorer, KrishiMitra's crop model, CreditSetu's risk tiering |
+| **Deep learning** | PyTorch · ResNet50 / VGG16 / EfficientNetV2 · CNN-LSTM · GraphSAGE · Grad-CAM | OpenForensics' three-backbone ensemble, the retinopathy grader, Vayu's forecaster |
+| **Generative AI** | Gemini 3.1 · Amazon Bedrock (Nova Pro) · RAG · vision OCR | VaidyaMitra reads strips and reports, Kadi's grounded bilingual assistant, Specledger's extraction |
+| **Agentic systems** | LangGraph · MCP tool layers · planner + executor splits | SmartAlloc's 7-agent pipeline, AGENTIQ's permission-checked tool layer, Inflx |
+
+The thing that stays constant across all four is not the technique.
 
 ## The shape almost everything I build takes
 
@@ -22,28 +33,22 @@ separation is the single design decision I repeat most, because it is what
 makes "why did this happen?" answerable by a person.
 
 ```mermaid
-flowchart TB
-    E["<b>Evidence in</b><br/>orders · retina images · FIRs<br/>transactions · API specs"]
-    E --> DET["<b>1 · Deterministic first</b><br/>parse · validate · cap · engineer features<br/><i>Specledger resolves spec tables before an LLM is involved at all</i>"]
-    DET --> MOD["<b>2 · The model proposes</b><br/>XGBoost · CatBoost · CNN · LLM<br/><i>the only learned step in the pipeline</i>"]
-    MOD --> CAL["<b>3 · Calibrate the confidence</b><br/>isotonic · temperature scaling · reliability diagrams<br/><i>a number you may read as a probability</i>"]
-    CAL --> GATE{"<b>4 · Is the evidence<br/>strong enough?</b>"}
-    GATE -->|no| ABS["<b>Abstain, and say so</b><br/>route to a human<br/><i>Medicure-AI · Specledger · low-confidence retina grades</i>"]
-    GATE -->|yes| DEC["<b>5 · Something deterministic decides</b><br/>densest-subgraph peeling · exact knapsack · assertion evaluator<br/><i>Orbweaver · AGENTIQ — the model never judges its own work</i>"]
-    DEC --> OUT["<b>6 · The output carries its own cost</b><br/>the evidence, the rupees at stake,<br/>the real customers wrongly caught per true catch"]
-    OUT --> HUM(["<b>A human decides</b>"])
-    OUT -.->|"what it got wrong"| LIM["<b>Publish the limits</b><br/>negative results · dated failure logs · bias audits<br/><i>MargaDrishti · FAILURES.md</i>"]
-    LIM -.->|"fix the pipeline,<br/>not the data"| DET
+flowchart LR
+    E["evidence in"] --> D["deterministic<br/>parse · validate · features"]
+    D --> M["<b>the model proposes</b><br/>XGBoost · CNN · LLM · agent"]
+    M --> G{"calibrated —<br/>enough evidence?"}
+    G -->|no| A["<b>abstain</b><br/>route to a human"]
+    G -->|yes| DEC["<b>deterministic decides</b><br/>peeling · knapsack · assertions"]
+    DEC --> O["output + what it cost<br/>evidence · ₹ · false positives"]
 
     classDef learned fill:#3a1f12,stroke:#e2621c,stroke-width:2px,color:#f3ede7
     classDef proved fill:#122a1b,stroke:#4ade80,stroke-width:2px,color:#f3ede7
     classDef plain fill:#1c1a18,stroke:#5a534c,color:#e8e2dc
     classDef soft fill:#1a1f26,stroke:#4a90ad,color:#e8e2dc
-    class MOD learned
+    class M learned
     class DEC proved
-    class E,DET,CAL,OUT plain
-    class ABS,LIM,GATE soft
-    class HUM proved
+    class E,D,O plain
+    class A,G soft
 ```
 
 **Why it is worth the extra work.** Ring membership in Orbweaver comes from a
@@ -109,22 +114,18 @@ The claim is cheap; these are the times it cost me something.
 
 ## How I work
 
-```
-Python · PyTorch · XGBoost / LightGBM / CatBoost · scikit-learn · igraph
-FastAPI · Streamlit · Next.js / TypeScript · Docker · GitHub Actions
-AWS Bedrock · Google Cloud Run · Vercel · Render · pandas / PyArrow · LangGraph
-```
-
-The stack matters less than the discipline around it: a temporal split a test
-enforces, a held-out set nothing touches, the false-positive cost printed next
-to the detection rate, and a `FAILURES.md` recording what I got wrong on the
-way there.
+Shipped on FastAPI, Streamlit and Next.js; deployed to Cloud Run, Vercel,
+Render and AWS; packaged to PyPI where it makes sense. But the stack matters
+less than the discipline around it — a temporal split a test enforces, a
+held-out set nothing touches, the false-positive cost printed next to the
+detection rate, and a `FAILURES.md` recording what I got wrong on the way.
 
 ## This repository builds itself
 
 The banner, the timeline and [PROJECTS.md](PROJECTS.md) are generated from the
 GitHub API — my own repositories and both organisations — so none of them can
-quietly fall behind what I have actually shipped:
+quietly fall behind what I have actually shipped. The three avatars (mine and
+the two organisations') are drawn by the same scripts, in one visual language:
 
 ```bash
 make refresh    # pull the current repository list

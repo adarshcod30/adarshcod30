@@ -9,8 +9,8 @@ all: assets index  ## redraw everything from the cached snapshot
 refresh:  ## pull the current repository list from the GitHub API (needs gh)
 	cd tools && $(PY) fetch.py
 
-assets:  ## redraw the banner and the timeline
-	cd tools && $(PY) banner.py && $(PY) timeline.py
+assets:  ## redraw the banner, the timeline and the avatars
+	cd tools && $(PY) banner.py && $(PY) timeline.py && $(PY) org_avatars.py
 
 index:  ## rewrite PROJECTS.md from the snapshot
 	cd tools && $(PY) projects_md.py

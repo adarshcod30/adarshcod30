@@ -114,11 +114,12 @@ def build() -> Image.Image:
     # the name block
     x0, y0 = int(CW * 0.052), int(CH * 0.255)
     d.text((x0, y0), "Adarsh Dwivedi", font=font(int(48 * F), bold=True), fill=CREAM)
-    f_tag = font(int(17 * F))
-    d.text((x0, y0 + int(64 * F)), "Measured, explainable ML", font=f_tag, fill=ORANGE_HI)
-    d.text((x0, y0 + int(88 * F)), "for problems that matter in India.",
+    f_tag = font(int(16 * F))
+    d.text((x0, y0 + int(64 * F)), "ML · deep learning · generative & agentic AI",
            font=f_tag, fill=ORANGE_HI)
-    d.line([x0, y0 + int(124 * F), x0 + int(330 * F), y0 + int(124 * F)],
+    d.text((x0, y0 + int(88 * F)), "built to be checked, for problems that matter in India.",
+           font=font(int(15 * F)), fill=(184, 150, 128))
+    d.line([x0, y0 + int(124 * F), x0 + int(392 * F), y0 + int(124 * F)],
            fill=(74, 67, 60), width=int(1.5 * F))
 
     n = len(projects())
