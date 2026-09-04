@@ -1,113 +1,139 @@
-"""The banner: every project a node, clustered by area, drawn from the
+"""The banner: every project placed in a radial system, drawn from the
 snapshot in data/repos.json rather than a hand-written list.
+
+Each of the five areas owns an angular sector. A project sits on a ring whose
+radius comes from its weight, so the work I would show first sits nearest the
+core. Nothing here is positioned by hand.
 """
 from __future__ import annotations
 
 import math
 import random
 
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFilter
 
-from common import ASSETS, CREAM, DIM, GREY, INK, INK2, ORANGE_HI, font, projects
+from common import (ASSETS, CREAM, GREY, INK, ORANGE_HI, add_glow, font,
+                    projects)
 from themes import AREAS, THEME, short
 
-W, H, F = 1600, 540, 2
+W, H, F = 1600, 560, 2
 CW, CH = W * F, H * F
-
-# where each area sits, and how tightly its nodes pack
-LAYOUT = {
-    "public-interest AI":  ((0.470, 0.335), 1.00),
-    "trust & verification": ((0.700, 0.335), 0.92),
-    "agentic systems":     ((0.886, 0.335), 0.78),
-    "quant & pipelines":   ((0.560, 0.760), 0.72),
-    "foundations":         ((0.790, 0.760), 0.62),
-}
+CX, CY = int(CW * 0.700), int(CH * 0.505)
+R_CORE = int(CH * 0.055)
+R_IN, R_OUT = int(CH * 0.150), int(CH * 0.360)
 
 
 def build() -> Image.Image:
-    rng = random.Random(11)
+    rng = random.Random(19)
     img = Image.new("RGB", (CW, CH), INK)
+
+    # a wide, soft pool of warmth behind the system
+    img = add_glow(img, CX, CY, int(R_OUT * 1.35), (74, 46, 28), 0.55)
     d = ImageDraw.Draw(img)
 
-    # a soft warm wash so the field is not a flat black slab
-    for i in range(220, 0, -1):
-        t = i / 220
-        col = tuple(int(INK[j] + (INK2[j] - INK[j]) * (1 - t) * 0.9) for j in range(3))
-        r = CW * 0.62 * t
-        d.ellipse([CW * .66 - r, CH * .42 - r, CW * .66 + r, CH * .42 + r], fill=col)
+    # concentric guides
+    for k in range(1, 5):
+        r = R_IN + (R_OUT - R_IN) * k / 4
+        d.ellipse([CX - r, CY - r, CX + r, CY + r], outline=(56, 51, 46),
+                  width=int(1.3 * F))
 
-    by_area: dict[str, list[dict]] = {a: [] for a, _, _ in AREAS}
+    by_area = {a: [] for a, _, _ in AREAS}
     for r in projects():
         by_area[THEME[r["name"]][0]].append(r)
 
-    placed, anchors = [], []
-    for area, colour, _desc in AREAS:
-        members = by_area[area]
-        if not members:
+    # every area gets an angular sector, sized by how much sits in it
+    total = sum(len(v) for v in by_area.values())
+    gap = math.radians(7)
+    start = math.radians(-102)
+    sectors = []
+    for area, colour, _ in AREAS:
+        n = len(by_area[area])
+        if not n:
             continue
-        (fx, fy), scale = LAYOUT[area]
-        ax, ay = fx * CW, fy * CH
-        k = len(members)
-        spread = CW * (0.026 + 0.0062 * k) * scale
-        anchors.append((ax, ay, area, colour, spread))
+        span = 2 * math.pi * (n / total) - gap
+        sectors.append((area, colour, start, span, by_area[area]))
+        start += span + gap
 
-        nodes = []
+    # sector dividers
+    for _a, _c, s0, span, _m in sectors:
+        for ang in (s0 - gap / 2, s0 + span + gap / 2):
+            d.line([CX + R_IN * 0.82 * math.cos(ang), CY + R_IN * 0.82 * math.sin(ang),
+                    CX + R_OUT * 1.10 * math.cos(ang), CY + R_OUT * 1.10 * math.sin(ang)],
+                   fill=(40, 36, 33), width=int(1.2 * F))
+
+    # nodes, and the spoke each one hangs from
+    placed = []
+    for area, colour, s0, span, members in sectors:
+        members = sorted(members, key=lambda r: -THEME[r["name"]][1])
         for i, r in enumerate(members):
-            weight = THEME[r["name"]][1]
-            a = 2 * math.pi * i / k + rng.uniform(-0.22, 0.22)
-            rr = spread * rng.uniform(0.80, 1.06)
-            nodes.append((ax + rr * math.cos(a), ay + rr * math.sin(a) * 0.78,
-                          weight, colour, short(r["name"])))
-        placed.extend(nodes)
+            w = THEME[r["name"]][1]
+            frac = (i + 0.5) / len(members)
+            ang = s0 + span * frac
+            # heavier work sits closer to the core, with a little stagger so
+            # neighbouring nodes never sit on one perfect arc
+            rad = R_OUT - (R_OUT - R_IN) * ((w - 1) / 2.0) * 0.42
+            rad += (0.10 if i % 2 else -0.10) * (R_OUT - R_IN)
+            rad += rng.uniform(-1, 1) * (R_OUT - R_IN) * 0.02
+            x, y = CX + rad * math.cos(ang), CY + rad * math.sin(ang)
+            d.line([CX + R_CORE * 1.25 * math.cos(ang),
+                    CY + R_CORE * 1.25 * math.sin(ang), x, y],
+                   fill=(52, 47, 43), width=int(1.25 * F))
+            placed.append((x, y, w, colour, short(r["name"]), ang))
 
-        for i in range(len(nodes)):
-            for j in range(i + 1, len(nodes)):
-                if rng.random() < 0.62:
-                    d.line([nodes[i][0], nodes[i][1], nodes[j][0], nodes[j][1]],
-                           fill=DIM, width=int(1.6 * F))
-
-    for i in range(len(anchors)):
-        for j in range(i + 1, len(anchors)):
-            a, b = anchors[i], anchors[j]
-            if rng.random() < 0.8:
-                d.line([a[0], a[1], b[0], b[1]], fill=(38, 35, 32), width=int(1.3 * F))
-
-    for (x, y, w, colour, _name) in placed:
-        r = (5.5 + 3.6 * w) * F
+    for (x, y, w, colour, _n, _a) in placed:
+        rr = (5.0 + 3.4 * w) * F
         if w >= 3:
-            for gr, al in ((r * 3.2, 22), (r * 2.0, 40)):
-                layer = Image.new("RGB", (CW, CH), INK)
-                ImageDraw.Draw(layer).ellipse([x - gr, y - gr, x + gr, y + gr],
-                                              fill=colour)
-                img = Image.blend(img, layer, al / 255)
-                d = ImageDraw.Draw(img)
-        d.ellipse([x - r, y - r, x + r, y + r], fill=colour)
+            img = add_glow(img, x, y, rr * 2.8, colour, 0.40)
+            d = ImageDraw.Draw(img)
+        d.ellipse([x - rr, y - rr, x + rr, y + rr], fill=colour)
 
-    # name only the heaviest node in each area, so it stays a picture
-    f_node, seen = font(int(11.5 * F)), set()
-    for (x, y, w, colour, name) in sorted(placed, key=lambda t: -t[2]):
-        if w >= 3 and colour not in seen:
-            seen.add(colour)
-            d.text((x + 14 * F, y - 6 * F), name, font=f_node, fill=(206, 198, 190))
+    # the core
+    img = add_glow(img, CX, CY, R_CORE * 2.4, (198, 88, 32), 0.55)
+    d = ImageDraw.Draw(img)
+    d.ellipse([CX - R_CORE, CY - R_CORE, CX + R_CORE, CY + R_CORE], fill=(26, 22, 20))
+    d.ellipse([CX - R_CORE, CY - R_CORE, CX + R_CORE, CY + R_CORE],
+              outline=ORANGE_HI, width=int(2.0 * F))
+    rc = R_CORE * 0.34
+    d.ellipse([CX - rc, CY - rc, CX + rc, CY + rc], fill=ORANGE_HI)
+    # area captions, outside the outermost ring
+    f_cl = font(int(12 * F), bold=True)
+    for area, colour, s0, span, members in sectors:
+        ang = s0 + span / 2
+        r = R_OUT * 1.20
+        tx, ty = CX + r * math.cos(ang), CY + r * math.sin(ang)
+        label = area.upper()
+        tw = d.textlength(label, font=f_cl)
+        if math.cos(ang) < -0.15:
+            tx -= tw
+        elif abs(math.cos(ang)) <= 0.15:
+            tx -= tw / 2
+        d.text((tx, ty - 6 * F), label, font=f_cl, fill=colour)
+        d.text((tx, ty + 9 * F), f"{len(members)} projects", font=font(int(10.5 * F)),
+               fill=(112, 105, 98))
 
-    f_cl = font(int(11.5 * F), bold=True)
-    for (ax, ay, label, colour, spread) in anchors:
-        tw = d.textlength(label.upper(), font=f_cl)
-        d.text((ax - tw / 2, ay + spread * 0.80 + 16 * F), label.upper(),
-               font=f_cl, fill=colour)
+    # the name block
+    x0, y0 = int(CW * 0.052), int(CH * 0.255)
+    d.text((x0, y0), "Adarsh Dwivedi", font=font(int(48 * F), bold=True), fill=CREAM)
+    f_tag = font(int(17 * F))
+    d.text((x0, y0 + int(64 * F)), "Measured, explainable ML", font=f_tag, fill=ORANGE_HI)
+    d.text((x0, y0 + int(88 * F)), "for problems that matter in India.",
+           font=f_tag, fill=ORANGE_HI)
+    d.line([x0, y0 + int(124 * F), x0 + int(330 * F), y0 + int(124 * F)],
+           fill=(74, 67, 60), width=int(1.5 * F))
 
     n = len(projects())
-    x0, y0 = int(CW * 0.055), int(CH * 0.30)
-    d.text((x0, y0), "Adarsh Dwivedi", font=font(int(46 * F), bold=True), fill=CREAM)
-    f_tag = font(int(16.5 * F))
-    d.text((x0, y0 + int(60 * F)), "Measured, explainable ML", font=f_tag, fill=ORANGE_HI)
-    d.text((x0, y0 + int(83 * F)), "for problems that matter in India.",
-           font=f_tag, fill=ORANGE_HI)
-    d.line([x0, y0 + int(112 * F), x0 + int(300 * F), y0 + int(112 * F)],
-           fill=(70, 64, 58), width=int(1.5 * F))
-    d.text((x0, y0 + int(120 * F)),
-           f"{n} projects  ·  every number reproducible  ·  every limit stated",
-           font=font(int(13 * F)), fill=GREY)
+    n_org = len({r["org"] for r in projects() if r.get("org")})
+    stats = [(str(n), "projects"), (str(len(sectors)), "areas"),
+             (str(n_org), "organisations")]
+    sx = x0
+    f_num, f_cap = font(int(23 * F), bold=True), font(int(11 * F))
+    for val, cap in stats:
+        d.text((sx, y0 + int(140 * F)), val, font=f_num, fill=CREAM)
+        d.text((sx, y0 + int(170 * F)), cap.upper(), font=f_cap, fill=(126, 118, 110))
+        sx += int(112 * F)
+    d.text((x0, y0 + int(202 * F)),
+           "every number reproducible  ·  every limit stated",
+           font=font(int(12.5 * F)), fill=GREY)
 
     return img.resize((W, H), Image.LANCZOS)
 

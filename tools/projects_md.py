@@ -6,10 +6,11 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from common import ROOT, projects, repos
+from common import ROOT, full_name, projects, repos
 from themes import AREAS, LEARNING, THEME
 
-URL = "https://github.com/adarshcod30"
+GH = "https://github.com"
+OWNER = "adarshcod30"
 
 
 def main() -> None:
@@ -44,7 +45,9 @@ def main() -> None:
             langs = ", ".join(e["node"]["name"]
                               for e in r["languages"]["edges"][:3]) or "-"
             desc = (r.get("description") or "").replace("|", "\\|").strip()
-            a(f"| **[{r['name']}]({URL}/{r['name']})** | {langs} | {desc} |")
+            # an organisation repository lives under the organisation, not me
+            label = r["name"] + (f" ⟨{r['org']}⟩" if r.get("org") else "")
+            a(f"| **[{label}]({GH}/{full_name(r)})** | {langs} | {desc} |")
         a("")
 
     learn = [r for r in repos() if r["name"] in LEARNING]
@@ -57,7 +60,7 @@ def main() -> None:
         a("| Repository | Started |")
         a("|---|---|")
         for r in sorted(learn, key=lambda r: r["createdAt"]):
-            a(f"| [{r['name']}]({URL}/{r['name']}) | {r['createdAt'][:10]} |")
+            a(f"| [{r['name']}]({GH}/{OWNER}/{r['name']}) | {r['createdAt'][:10]} |")
         a("")
 
     a("---")

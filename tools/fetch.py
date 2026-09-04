@@ -10,15 +10,27 @@ import sys
 
 from common import DATA
 
-QUERY = """
-{ user(login:"adarshcod30") { repositories(first:100, ownerAffiliations:OWNER,
-                                           privacy:PUBLIC) { nodes {
+FIELDS = """
   name description createdAt pushedAt isFork stargazerCount
+  owner{login}
   primaryLanguage{name}
   languages(first:6, orderBy:{field:SIZE,direction:DESC}){edges{size node{name}}}
   repositoryTopics(first:12){nodes{topic{name}}}
-} } } }
 """
+
+# my own repositories, plus the two organisations I build under
+QUERY = """
+{
+  user(login:"adarshcod30") {
+    repositories(first:100, ownerAffiliations:OWNER, privacy:PUBLIC) {
+      nodes { %s }
+    }
+    organizations(first:10) {
+      nodes { login repositories(first:50, privacy:PUBLIC) { nodes { %s } } }
+    }
+  }
+}
+""" % (FIELDS, FIELDS)
 
 
 def main() -> int:

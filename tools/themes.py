@@ -29,6 +29,7 @@ AREAS = [
 THEME = {
     # public-interest AI
     "KrishiMitra": ("public-interest AI", 3),
+    "VaidyaMitra": ("public-interest AI", 3),
     "Vayu": ("public-interest AI", 3),
     "Kadi": ("public-interest AI", 3),
     "Diabetic-Retinopathy-Detection": ("public-interest AI", 3),
@@ -39,6 +40,7 @@ THEME = {
 
     # trust & verification
     "Orbweaver": ("trust & verification", 3),
+    "AGENTIQ": ("trust & verification", 3),          # B.Tech final-year project
     "artifact-repro-triage": ("trust & verification", 2),
     "OpenForensics": ("trust & verification", 2),
     "MedGuardX": ("trust & verification", 2),
@@ -66,6 +68,9 @@ THEME = {
 
 # the four repos I learned on, kept out of the counts so they are not padding
 LEARNING = {"First-repo", "SecondRepo", "JavaProjects", "PythonProjects"}
+
+# an empty placeholder repository, excluded from every count
+SKIP = {"BTP", "demo-repository"}
 
 # short display names where the repo name is too long for a chart label
 SHORT = {
