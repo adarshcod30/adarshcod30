@@ -4,3 +4,7 @@ __pycache__/
 .claude.json
 CLAUDE.local.md
 .DS_Store
+
+# local agent and editor files, never committed
+CLAUDE.md
+AGENTS.md
