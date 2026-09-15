@@ -11,7 +11,7 @@ from datetime import datetime
 
 from PIL import Image, ImageDraw, ImageFilter
 
-from common import (ASSETS, CREAM, GREY, INK, ORANGE_HI, add_glow, font,
+from common import (ACCENT_HI, ASSETS, CREAM, GREY, INK, add_glow, font,
                     projects, repos)
 from themes import AREAS, LEARNING, SKIP, THEME, area_colour
 
@@ -68,26 +68,26 @@ def build() -> Image.Image:
     pts = [(mx(mk), cy(v)) for mk, v in zip(months, cum)]
 
     # the filled area goes down first, so nothing drawn later is dimmed by it
-    d.polygon(pts + [(pts[-1][0], T + PH), (pts[0][0], T + PH)], fill=(52, 27, 14))
+    d.polygon(pts + [(pts[-1][0], T + PH), (pts[0][0], T + PH)], fill=(14, 36, 70))
 
     # ---- gridlines and axes ----------------------------------------------
     f_ax = font(int(12 * F))
     for v in range(0, top + 1, 7):
         y = cy(v)
-        d.line([L, y, L + PW, y], fill=(52, 47, 43), width=int(1.2 * F))
-        d.text((L - 26 * F, y - 8 * F), str(v), font=f_ax, fill=(132, 124, 116))
-    d.line([L, T + PH, L + PW, T + PH], fill=(90, 82, 74), width=int(1.6 * F))
-    d.line(pts, fill=ORANGE_HI, width=int(3.0 * F), joint="curve")
+        d.line([L, y, L + PW, y], fill=(31, 43, 68), width=int(1.2 * F))
+        d.text((L - 26 * F, y - 8 * F), str(v), font=f_ax, fill=(123, 141, 172))
+    d.line([L, T + PH, L + PW, T + PH], fill=(62, 82, 118), width=int(1.6 * F))
+    d.line(pts, fill=ACCENT_HI, width=int(3.0 * F), joint="curve")
 
     for mk in months:
         x = mx(mk)
         first = mk.endswith("-01") or mk == months[0]
         d.line([x, T + PH, x, T + PH + (9 if first else 5) * F],
-               fill=(112, 103, 94) if first else (72, 66, 60), width=int(1.4 * F))
+               fill=(103, 121, 152) if first else (47, 61, 91), width=int(1.4 * F))
         if int(mk[5:7]) % 3 == 1 or mk == months[0]:
             lab = f"{MONTH[int(mk[5:7]) - 1]} {mk[2:4]}"
             d.text((x - d.textlength(lab, font=f_ax) / 2, T + PH + 14 * F),
-                   lab, font=f_ax, fill=(158, 149, 140))
+                   lab, font=f_ax, fill=(149, 165, 194))
 
     # ---- one dot per project, stacked in its month ------------------------
     step = PH / 8.2
@@ -97,7 +97,7 @@ def build() -> Image.Image:
         for i, r in enumerate(items):
             y = T + PH - step * (i + 0.7)
             if r["name"] in LEARNING:
-                colour, rad = (84, 78, 72), 5.0 * F
+                colour, rad = (77, 91, 118), 5.0 * F
             else:
                 area_name, weight = THEME[r["name"]]
                 colour, rad = area_colour(area_name), (5.0 + 2.5 * weight) * F
@@ -120,7 +120,7 @@ def build() -> Image.Image:
            font=font(int(14 * F)), fill=GREY)
     d.text((L, int(CH * .235)),
            "grey dots are the four repositories I learned on, kept public on purpose",
-           font=font(int(12.5 * F)), fill=(104, 97, 90))
+           font=font(int(12.5 * F)), fill=(99, 115, 145))
 
     # ---- legend -----------------------------------------------------------
     lx, ly = L, CH - int(CH * .058)

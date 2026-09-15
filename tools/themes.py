@@ -10,18 +10,18 @@ from __future__ import annotations
 
 # ordered: the order the areas appear in the README and the banner
 AREAS = [
-    ("public-interest AI", (226, 98, 38),
+    ("public-interest AI", (56, 168, 255),
      "Systems for problems that already have victims - crop loss, air quality, "
      "road capacity, misdiagnosis, thin-file credit."),
-    ("trust & verification", (72, 146, 180),
+    ("trust & verification", (34, 211, 238),
      "Deciding whether to believe something: a ring, a face, a claim, a "
      "repository's own README."),
-    ("agentic systems", (206, 158, 74),
+    ("agentic systems", (129, 140, 248),
      "Multi-step pipelines that decide and act, with a human holding the "
      "final switch."),
-    ("quant & pipelines", (152, 130, 176),
+    ("quant & pipelines", (167, 129, 240),
      "Market behaviour and the reproducible plumbing underneath it."),
-    ("foundations", (120, 112, 104),
+    ("foundations", (100, 116, 139),
      "The groundwork - algorithms, tooling, and where I started."),
 ]
 
@@ -36,7 +36,7 @@ THEME = {
     "MargaDrishti": ("public-interest AI", 2),
     "Medicure-AI": ("public-interest AI", 2),
     "CreditSetu": ("public-interest AI", 2),
-    "floodcast-gurugram": ("public-interest AI", 1),
+    "Floodcast-Gurugram": ("public-interest AI", 1),
 
     # trust & verification
     "Orbweaver": ("trust & verification", 3),
@@ -49,6 +49,9 @@ THEME = {
     "Talent-Intelligence-Candidate-Discovery-Platform": ("trust & verification", 1),
 
     # agentic systems
+    "Travel-Planner-Agent": ("agentic systems", 2),
+    "CacheLLM": ("agentic systems", 2),
+    "buy-or-wait-financial-agent": ("agentic systems", 2),
     "SmartAlloc": ("agentic systems", 2),
     "Inflx": ("agentic systems", 1),
     "Message-Notification-Router": ("agentic systems", 1),
@@ -60,6 +63,7 @@ THEME = {
     "PrimeTradeDS": ("quant & pipelines", 1),
     "Flipkart-Gridlock-2.0": ("quant & pipelines", 1),
     "Air-Cargo-Intelligence": ("quant & pipelines", 1),
+    "switch-energy-x-india": ("quant & pipelines", 1),
 
     # foundations
     "Adaptive-Graph-Search-Suite": ("foundations", 1),
@@ -82,9 +86,12 @@ SHORT = {
     "Cost-Intel-Intelligence": "Cost-Intel",
     "Adaptive-Graph-Search-Suite": "Graph-Search-Suite",
     "Air-Cargo-Intelligence": "Air-Cargo",
+    "buy-or-wait-financial-agent": "Buy-or-Wait",
+    "switch-energy-x-india": "SWITCH-Energy-X",
+    "Travel-Planner-Agent": "Travel-Planner",
     "Flipkart-Gridlock-2.0": "Flipkart-Gridlock",
     "artifact-repro-triage": "artifact-repro-triage",
-    "floodcast-gurugram": "floodcast",
+    "Floodcast-Gurugram": "Floodcast",
 }
 
 
@@ -96,4 +103,4 @@ def area_colour(area: str):
     for a, c, _ in AREAS:
         if a == area:
             return c
-    return (120, 112, 104)
+    return (100, 116, 139)

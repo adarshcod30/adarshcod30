@@ -12,7 +12,7 @@ import random
 
 from PIL import Image, ImageDraw, ImageFilter
 
-from common import (ASSETS, CREAM, GREY, INK, ORANGE_HI, add_glow, font,
+from common import (ACCENT_HI, ASSETS, CREAM, GREY, INK, add_glow, font,
                     projects)
 from themes import AREAS, THEME, short
 
@@ -28,13 +28,13 @@ def build() -> Image.Image:
     img = Image.new("RGB", (CW, CH), INK)
 
     # a wide, soft pool of warmth behind the system
-    img = add_glow(img, CX, CY, int(R_OUT * 1.35), (74, 46, 28), 0.55)
+    img = add_glow(img, CX, CY, int(R_OUT * 1.35), (16, 44, 92), 0.55)
     d = ImageDraw.Draw(img)
 
     # concentric guides
     for k in range(1, 5):
         r = R_IN + (R_OUT - R_IN) * k / 4
-        d.ellipse([CX - r, CY - r, CX + r, CY + r], outline=(56, 51, 46),
+        d.ellipse([CX - r, CY - r, CX + r, CY + r], outline=(33, 45, 72),
                   width=int(1.3 * F))
 
     by_area = {a: [] for a, _, _ in AREAS}
@@ -59,7 +59,7 @@ def build() -> Image.Image:
         for ang in (s0 - gap / 2, s0 + span + gap / 2):
             d.line([CX + R_IN * 0.82 * math.cos(ang), CY + R_IN * 0.82 * math.sin(ang),
                     CX + R_OUT * 1.10 * math.cos(ang), CY + R_OUT * 1.10 * math.sin(ang)],
-                   fill=(40, 36, 33), width=int(1.2 * F))
+                   fill=(25, 35, 58), width=int(1.2 * F))
 
     # nodes, and the spoke each one hangs from
     placed = []
@@ -77,7 +77,7 @@ def build() -> Image.Image:
             x, y = CX + rad * math.cos(ang), CY + rad * math.sin(ang)
             d.line([CX + R_CORE * 1.25 * math.cos(ang),
                     CY + R_CORE * 1.25 * math.sin(ang), x, y],
-                   fill=(52, 47, 43), width=int(1.25 * F))
+                   fill=(31, 43, 68), width=int(1.25 * F))
             placed.append((x, y, w, colour, short(r["name"]), ang))
 
     for (x, y, w, colour, _n, _a) in placed:
@@ -88,13 +88,13 @@ def build() -> Image.Image:
         d.ellipse([x - rr, y - rr, x + rr, y + rr], fill=colour)
 
     # the core
-    img = add_glow(img, CX, CY, R_CORE * 2.4, (198, 88, 32), 0.55)
+    img = add_glow(img, CX, CY, R_CORE * 2.4, (32, 132, 232), 0.62)
     d = ImageDraw.Draw(img)
-    d.ellipse([CX - R_CORE, CY - R_CORE, CX + R_CORE, CY + R_CORE], fill=(26, 22, 20))
+    d.ellipse([CX - R_CORE, CY - R_CORE, CX + R_CORE, CY + R_CORE], fill=(13, 20, 38))
     d.ellipse([CX - R_CORE, CY - R_CORE, CX + R_CORE, CY + R_CORE],
-              outline=ORANGE_HI, width=int(2.0 * F))
+              outline=ACCENT_HI, width=int(2.0 * F))
     rc = R_CORE * 0.34
-    d.ellipse([CX - rc, CY - rc, CX + rc, CY + rc], fill=ORANGE_HI)
+    d.ellipse([CX - rc, CY - rc, CX + rc, CY + rc], fill=ACCENT_HI)
     # area captions, outside the outermost ring
     f_cl = font(int(12 * F), bold=True)
     for area, colour, s0, span, members in sectors:
@@ -109,28 +109,28 @@ def build() -> Image.Image:
             tx -= tw / 2
         d.text((tx, ty - 6 * F), label, font=f_cl, fill=colour)
         d.text((tx, ty + 9 * F), f"{len(members)} projects", font=font(int(10.5 * F)),
-               fill=(112, 105, 98))
+               fill=(108, 125, 156))
 
     # the name block
     x0, y0 = int(CW * 0.052), int(CH * 0.255)
     d.text((x0, y0), "Adarsh Dwivedi", font=font(int(48 * F), bold=True), fill=CREAM)
     f_tag = font(int(16 * F))
     d.text((x0, y0 + int(64 * F)), "ML · deep learning · generative & agentic AI",
-           font=f_tag, fill=ORANGE_HI)
+           font=f_tag, fill=ACCENT_HI)
     d.text((x0, y0 + int(88 * F)), "built to be checked, for problems that matter in India.",
-           font=font(int(15 * F)), fill=(184, 150, 128))
+           font=font(int(15 * F)), fill=(147, 175, 212))
     d.line([x0, y0 + int(124 * F), x0 + int(392 * F), y0 + int(124 * F)],
-           fill=(74, 67, 60), width=int(1.5 * F))
+           fill=(43, 59, 90), width=int(1.5 * F))
 
     n = len(projects())
     n_org = len({r["org"] for r in projects() if r.get("org")})
     stats = [(str(n), "projects"), (str(len(sectors)), "areas"),
-             (str(n_org), "organisations")]
+             (str(n_org), "organisation" if n_org == 1 else "organisations")]
     sx = x0
     f_num, f_cap = font(int(23 * F), bold=True), font(int(11 * F))
     for val, cap in stats:
         d.text((sx, y0 + int(140 * F)), val, font=f_num, fill=CREAM)
-        d.text((sx, y0 + int(170 * F)), cap.upper(), font=f_cap, fill=(126, 118, 110))
+        d.text((sx, y0 + int(170 * F)), cap.upper(), font=f_cap, fill=(119, 137, 168))
         sx += int(112 * F)
     d.text((x0, y0 + int(202 * F)),
            "every number reproducible  ·  every limit stated",

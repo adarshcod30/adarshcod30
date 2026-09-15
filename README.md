@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="assets/banner.png" alt="Adarsh Dwivedi — ML, deep learning and generative and agentic AI, built to be checked. A radial map of 28 projects across five areas: public-interest AI, trust and verification, agentic systems, quant and pipelines, and foundations." width="100%">
+<img src="assets/banner.png" alt="Adarsh Dwivedi — ML, deep learning and generative and agentic AI, built to be checked. A radial map of 32 projects across five areas: public-interest AI, trust and verification, agentic systems, quant and pipelines, and foundations." width="100%">
 
-### [Orbweaver](https://github.com/adarshcod30/Orbweaver) · [Kadi](https://github.com/adarshcod30/Kadi) · [KrishiMitra](https://github.com/adarshcod30/KrishiMitra) · [Vayu](https://github.com/adarshcod30/Vayu) · [MargaDrishti](https://github.com/adarshcod30/MargaDrishti) · [VaidyaMitra](https://github.com/VaidyaMitra/VaidyaMitra) · [AGENTIQ](https://github.com/B-TechProject/AGENTIQ)
+### [Orbweaver](https://github.com/adarshcod30/Orbweaver) · [Kadi](https://github.com/adarshcod30/Kadi) · [KrishiMitra](https://github.com/adarshcod30/KrishiMitra) · [Vayu](https://github.com/adarshcod30/Vayu) · [MargaDrishti](https://github.com/adarshcod30/MargaDrishti) · [VaidyaMitra](https://github.com/VaidyaMitra/VaidyaMitra) · [AGENTIQ](https://github.com/adarshcod30/AGENTIQ)
 
 **[Every project, grouped →](PROJECTS.md)**
 
@@ -61,7 +61,7 @@ load-bearing.
 
 <div align="center">
 
-<img src="assets/timeline.png" alt="Running total of 28 projects from June 2025 to September 2026, coloured by area, with the four early learning repositories in grey." width="100%">
+<img src="assets/timeline.png" alt="Running total of 32 projects from June 2025 to September 2026, coloured by area, with the four early learning repositories in grey." width="100%">
 
 </div>
 
@@ -85,7 +85,7 @@ load-bearing.
 | Project | The hard part |
 |---|---|
 | **[Orbweaver](https://github.com/adarshcod30/Orbweaver)** | Densest-subgraph extraction over a **35.7M-edge** account graph: **0.7292** ring precision against a **0.2242** base rate, always reported with the **0.371** real customers swept in per fraudster caught. 36 dated failures published alongside |
-| **[AGENTIQ](https://github.com/B-TechProject/AGENTIQ)** ⟨org⟩ | B.Tech final-year project. Six vulnerability families probed by **baseline differential**, so a finding needs a material deviation rather than a suspicious-looking string. Every outbound request passes a permission-checked, SSRF-guarded, audited tool layer |
+| **[AGENTIQ](https://github.com/adarshcod30/AGENTIQ)** | B.Tech final-year project. Six vulnerability families probed by **baseline differential**, so a finding needs a material deviation rather than a suspicious-looking string. Every outbound request passes a permission-checked, SSRF-guarded, audited tool layer |
 | **[artifact-repro-triage](https://github.com/adarshcod30/artifact-repro-triage)** | Checks whether a paper's repository contains what its README promises. **0% → 100%** detection of fabricated file claims across **742** artifacts |
 | **[OpenForensics](https://github.com/adarshcod30/OpenForensics)** | Three-backbone deepfake ensemble with calibrated confidence and per-backbone Grad-CAM — the dashboard shows the evidence, not just the verdict |
 | **[Specledger](https://github.com/adarshcod30/Specledger)** | A logistic calibrator over **11 evidence features** picks an auto-publish threshold hitting a measured precision floor on held-out data — instead of trusting an LLM's self-reported confidence |
@@ -134,7 +134,7 @@ make index      # rewrite PROJECTS.md
 make            # the last two
 ```
 
-Claiming reproducibility on 28 projects and then hand-maintaining my own
+Claiming reproducibility on 32 projects and then hand-maintaining my own
 profile would have made this the one dishonest page on the account.
 
 ## Elsewhere

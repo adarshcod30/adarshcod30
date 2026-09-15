@@ -15,13 +15,15 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data" / "repos.json"
 ASSETS = ROOT / "assets"
 
-INK = (16, 15, 14)
-INK2 = (30, 27, 25)
-CREAM = (251, 250, 249)
-ORANGE = (194, 65, 12)
-ORANGE_HI = (232, 106, 45)
-DIM = (58, 53, 49)
-GREY = (150, 142, 134)
+# One cool palette, used by every asset here. Deep navy ground, electric blue
+# as the single accent, and neutrals biased blue so nothing reads as warm grey.
+INK = (10, 14, 26)          # the ground everything sits on
+INK2 = (17, 24, 42)         # one step up from the ground
+CREAM = (237, 244, 255)     # cool white, for headings
+ACCENT = (29, 118, 219)     # the accent at rest
+ACCENT_HI = (64, 169, 255)  # the accent when it carries light
+DIM = (37, 49, 74)          # hairlines and inactive strokes
+GREY = (139, 155, 184)      # secondary text
 
 FONT_CANDIDATES_REGULAR = [
     "/System/Library/Fonts/Supplemental/Arial.ttf",
@@ -56,6 +58,15 @@ def repos() -> list[dict]:
                 r = dict(r)
                 r["org"] = org["login"]
                 out.append(r)
+    # A project can live under my account and an organisation at the same time
+    # (AGENTIQ does). Counting it twice would inflate every total on this page,
+    # so the copy that was pushed most recently wins and the other is dropped.
+    best: dict[str, dict] = {}
+    for r in out:
+        prev = best.get(r["name"])
+        if prev is None or r.get("pushedAt", "") > prev.get("pushedAt", ""):
+            best[r["name"]] = r
+    out = list(best.values())
     out.sort(key=lambda r: r["createdAt"])
     return out
 
