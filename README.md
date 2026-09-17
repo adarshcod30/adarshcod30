@@ -161,6 +161,7 @@ nobody can open is a claim nobody can check.
 
 <div align="center">
 
+[![Portfolio](https://img.shields.io/badge/Portfolio-adarshdwivedi.site-0A0E1A?logo=vercel&logoColor=white)](https://adarshdwivedi.site)
 [![GitHub](https://img.shields.io/badge/GitHub-adarshcod30-0A0E1A?logo=github)](https://github.com/adarshcod30)
 [![Email](https://img.shields.io/badge/email-23ucs509%40lnmiit.ac.in-1D76DB)](mailto:23ucs509@lnmiit.ac.in)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-adarshdwivedi30-0369a1?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/adarshdwivedi30/)
