@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/banner.png" alt="Adarsh Dwivedi: ML, deep learning and generative and agentic AI, built to be checked. A radial map of 32 projects across five areas: public-interest AI, trust and verification, agentic systems, quant and pipelines, and foundations." width="100%">
+<img src="assets/banner.png" alt="Adarsh Dwivedi: ML, deep learning and generative and agentic AI, built to be checked. A radial map of 35 projects across five areas: public-interest AI, trust and verification, agentic systems, quant and pipelines, and foundations." width="100%">
 
 ### [Orbweaver](https://github.com/adarshcod30/Orbweaver) · [Kadi](https://github.com/adarshcod30/Kadi) · [KrishiMitra](https://github.com/adarshcod30/KrishiMitra) · [Vayu](https://github.com/adarshcod30/Vayu) · [MargaDrishti](https://github.com/adarshcod30/MargaDrishti) · [VaidyaMitra](https://github.com/VaidyaMitra/VaidyaMitra) · [AGENTIQ](https://github.com/adarshcod30/AGENTIQ)
 
@@ -61,7 +61,7 @@ load-bearing.
 
 <div align="center">
 
-<img src="assets/timeline.png" alt="Running total of 32 projects from June 2025 to September 2026, coloured by area, with the four early learning repositories in grey." width="100%">
+<img src="assets/timeline.png" alt="Running total of 35 projects from June 2025 to October 2026, coloured by area, with the four early learning repositories in grey." width="100%">
 
 </div>
 
@@ -86,7 +86,7 @@ load-bearing.
 | Project | The hard part |
 |---|---|
 | **[Orbweaver](https://github.com/adarshcod30/Orbweaver)** | Densest-subgraph extraction over a **35.7M-edge** account graph: **0.7292** ring precision against a **0.2242** base rate, always reported with the **0.371** real customers swept in per fraudster caught. 36 dated failures published alongside |
-| **[AGENTIQ](https://github.com/adarshcod30/AGENTIQ)** | B.Tech final-year project. **Eight** vulnerability families mapped to the OWASP API Security Top 10, probed by **baseline differential**, so a finding needs a material deviation rather than a suspicious-looking string. Every outbound request passes a permission-checked, SSRF-guarded, audited tool layer |
+| **[AGENTIQ](https://github.com/adarshcod30/AGENTIQ)** | B.Tech final-year project. **Eight** vulnerability families mapped to the OWASP API Security Top 10, probed by **baseline differential**, so a finding needs a material deviation rather than a suspicious-looking string. Every outbound request passes a permission-checked, SSRF-guarded, audited layer of **21** tools in six risk classes, and **719** tests gate every change |
 | **[artifact-repro-triage](https://github.com/adarshcod30/artifact-repro-triage)** | Checks whether a paper's repository contains what its README promises. **0% → 100%** detection of fabricated file claims across **742** artifacts |
 | **[OpenForensics](https://github.com/adarshcod30/OpenForensics)** | Three-backbone deepfake ensemble with calibrated confidence and per-backbone Grad-CAM. The dashboard shows the evidence, not just the verdict |
 | **[Specledger](https://github.com/adarshcod30/Specledger)** | A logistic calibrator over **11 evidence features** picks an auto-publish threshold hitting a measured precision floor on held-out data, instead of trusting an LLM's self-reported confidence |
@@ -96,6 +96,7 @@ load-bearing.
 
 | Project | The hard part |
 |---|---|
+| **[HireFlow](https://github.com/adarshcod30/hireflow)** | A hiring pipeline on AWS built for the failures tutorials skip: double clicks, two people editing one record, a queue that delivers a message twice. NestJS and PostgreSQL, SQS and Lambda, Bedrock Nova first-pass screening, one email per status change, all in CDK. **609** tests, and the README says what was measured and that it has no real users |
 | **[SmartAlloc](https://github.com/adarshcod30/SmartAlloc)** | A 7-agent LangGraph pipeline over linear programming that finds compute waste and predicts SLA bottlenecks before they land |
 | **[Talent-Intelligence](https://github.com/adarshcod30/Talent-Intelligence-Candidate-Discovery-Platform)** | **100,000** candidates ranked in under **18 seconds**, CPU only, with honeypot and fake-profile filtering |
 | **[CacheLLM](https://github.com/adarshcod30/CacheLLM)** | `pip install cachellm-proxy`. A drop-in proxy keeping the OpenAI request and response shape *including streaming*, verified against the official Python and Node SDKs. Exact hash, then a cosine tier whose safe threshold is **measured per embedding model**. **77%** hit rate, **78%** lower cost, zero wrong answers on genuinely new questions |
@@ -148,7 +149,7 @@ make index      # rewrite PROJECTS.md
 make            # the last two
 ```
 
-Claiming reproducibility on 32 projects and then hand-maintaining my own
+Claiming reproducibility on 35 projects and then hand-maintaining my own
 profile would have made this the one dishonest page on the account.
 
 ## Elsewhere

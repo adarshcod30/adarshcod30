@@ -47,7 +47,9 @@ def main() -> None:
             desc = (r.get("description") or "").replace("|", "\\|").strip()
             # an organisation repository lives under the organisation, not me
             label = r["name"] + (f" ⟨{r['org']}⟩" if r.get("org") else "")
-            a(f"| **[{label}]({GH}/{full_name(r)})** | {langs} | {desc} |")
+            # own repositories need the owner in the link, organisation ones carry it already
+            path = full_name(r) if r.get("org") else f"{OWNER}/{r['name']}"
+            a(f"| **[{label}]({GH}/{path})** | {langs} | {desc} |")
         a("")
 
     learn = [r for r in repos() if r["name"] in LEARNING]

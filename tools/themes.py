@@ -53,6 +53,7 @@ THEME = {
     "CacheLLM": ("agentic systems", 2),
     "buy-or-wait-financial-agent": ("agentic systems", 2),
     "SmartAlloc": ("agentic systems", 2),
+    "hireflow": ("agentic systems", 2),
     "Inflx": ("agentic systems", 1),
     "Message-Notification-Router": ("agentic systems", 1),
     "Cost-Intel-Intelligence": ("agentic systems", 1),
@@ -68,6 +69,8 @@ THEME = {
     # foundations
     "Adaptive-Graph-Search-Suite": ("foundations", 1),
     "LNMIIT-Event-Management-System": ("foundations", 1),
+    "portfolio": ("foundations", 1),
+    "snipvault_v2": ("foundations", 1),
 }
 
 # the four repos I learned on, kept out of the counts so they are not padding
