@@ -119,7 +119,7 @@ The claim is cheap; these are the times it cost me something.
 | | |
 |---|---|
 | **HackerRank Orchestrate** | 24-hour agentic AI challenges: **#12** (Sep 2026), **#290** with a bronze medal, top 15% (Aug 2026), **#427**, top 25% (Jun 2026). Each submission is public: [Buy or Wait](https://github.com/adarshcod30/buy-or-wait-financial-agent), [Message Notification Router](https://github.com/adarshcod30/Message-Notification-Router), [Multi-Modal Evidence Review](https://github.com/adarshcod30/Multi-Modal-Evidence-Review) |
-| **KSP Datathon 2026** | Reached **Level 2** with [Kadi](https://github.com/adarshcod30/Kadi), built end to end over 50 days and deployed for the Karnataka State Police |
+| **KSP Datathon 2026** | Finalist, reached **Level 2** with [Kadi](https://github.com/adarshcod30/Kadi), built end to end over 50 days and deployed for the Karnataka State Police |
 | **Hacksplosion 2026** (Deloitte India) | Cleared **Levels 1, 2 and 3** |
 | **SWITCH Energy-X** | **11th of 93** on the private leaderboard, recovering a hidden physical law from 500,000 unlabeled, 26%-missing sensor rows |
 | **micro1 Frontier Engineering** | [artifact-repro-triage](https://github.com/adarshcod30/artifact-repro-triage), measured across **742** repositories |
